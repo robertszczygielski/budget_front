@@ -2,11 +2,18 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useState } from "react";
 
 const Button = styled.button`
   background-colour: teal;
   color: green;
   padding: 1rem 2rem;
+`
+
+const P = styled.p` 
+    margin: 10;
+    padding: 10;
+    color: red;
 `
 
 const Input = styled.input`
@@ -38,7 +45,12 @@ const Label = styled.label`
     will-change: transform, font-size;
 `
 
-export const LoginForm = () => {
+interface LoginFormProps {
+    setToken: (token: string) => void;
+}
+
+export const LoginForm = ({ setToken }: LoginFormProps) => {
+    const [error, setError] = useState(false)
 
     function onSubmit(values: any) {
         axios.request({
@@ -51,9 +63,12 @@ export const LoginForm = () => {
             headers: {'Content-Type': 'application/json'}
         })
             .then(res => {
-                console.log(res);
+                setError(false)
+                const token = res.data.jwtToken
+                setToken(token)
             })
             .catch(err => {
+                setError(true)
                 console.log(err)
             })
     }
@@ -94,6 +109,7 @@ export const LoginForm = () => {
 
                     <br/>
                     <Button type="submit">Submit</Button>
+                    {error && <P>NO NO, podaja poprawyny login i hasło</P>}
                 </form>
             )}
         </Formik>
