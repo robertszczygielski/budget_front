@@ -1,31 +1,82 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import styled from 'styled-components';
+import axios from 'axios';
+
+const Button = styled.button`
+  background-colour: teal;
+  color: green;
+  padding: 1rem 2rem;
+`
+
+const Input = styled.input`
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 20;
+    text-decoration: none;
+    font-family: 'Roboto';
+    user-select: none;
+    list-style: none;
+    position: relative;
+    background-color: $deepBlue-5;
+    font-size: 1.05em;
+    padding: 0 5%;
+`
+
+const Label = styled.label`
+    font-size: 2em;
+    left: 5%;
+    top: 0;
+    color: $blue-100;
+    font-weight: 400;
+    text-transform: capitalize;
+    pointer-events: none;
+    transition: 
+      transform 0.2s ease-in-out,
+      font-size 0.2s 0.15s ease-in-out;
+    will-change: transform, font-size;
+`
 
 export const LoginForm = () => {
 
+    function onSubmit(values: any) {
+        axios.request({
+            url: 'http://localhost:8080/auth/authorization',
+            method: 'POST',
+            data: {
+                "username": values.login,
+                "password": values.password,
+            },
+            headers: {'Content-Type': 'application/json'}
+        })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     return (
         <Formik
-            initialValues={{ login: '', password: '' }}
+            initialValues={{login: '', password: ''}}
             validationSchema={Yup.object({
                 login: Yup.string()
-                    .required('Required'),
-                password: Yup  .string()
-                    .min(8)
+                    .required('Required min=8; max=16'),
+                password: Yup.string()
+                    .min(3)
                     .max(16)
                     .required(),
             })}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                }, 400);
-            }}
+            onSubmit={onSubmit}
         >
             {formik => (
                 <form onSubmit={formik.handleSubmit}>
 
-                    <label htmlFor="login">Login</label>
-                    <input
+                    <Label htmlFor="login">Login</Label>
+                    <br/>
+                    <Input
                         id="login"
                         type="text"
                         {...formik.getFieldProps('login')}
@@ -33,14 +84,16 @@ export const LoginForm = () => {
                     {formik.touched.login && formik.errors.login ? (
                         <div>{formik.errors.login}</div>
                     ) : null}
-
-                    <label htmlFor="password">password Address</label>
-                    <input id="password" type="password" {...formik.getFieldProps('password')} />
+                    <br/>
+                    <Label htmlFor="password">password Address</Label>
+                    <br/>
+                    <Input id="password" type="password" {...formik.getFieldProps('password')} />
                     {formik.touched.password && formik.errors.password ? (
                         <div>{formik.errors.password}</div>
                     ) : null}
 
-                    <button type="submit">Submit</button>
+                    <br/>
+                    <Button type="submit">Submit</Button>
                 </form>
             )}
         </Formik>
