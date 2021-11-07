@@ -3,9 +3,9 @@ import './App.css';
 import { LoginForm } from "./app/LoginForm";
 
 function App() {
-  return (
-      <LoginForm />
-  );
+    return (
+        <LoginForm/>
+    );
 }
 
 export default App;
