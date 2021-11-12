@@ -1,6 +1,6 @@
 
 export interface AssetDto {
-    id: string;
+    id?: string;
     amount: number;
     incomeDate: string;
     category: string;

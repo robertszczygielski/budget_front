@@ -1,6 +1,7 @@
 import { AllAssets } from "./assets/AllAssets";
 import styled from "styled-components";
 import { useState } from "react";
+import { AddAsset } from "./assets/AddAsset";
 
 const ButtonLogout = styled.button`
   background-colour: teal;
@@ -46,8 +47,10 @@ export const MainView = ({token, setToken}: MainViewProps) => {
         <ButtonDiv>
             <ButtonLogout onClick={logoutUser}>Logout</ButtonLogout>
             <StandardButton onClick={setAllAssets}>Wszystkie przychody</StandardButton>
+            <StandardButton onClick={setAddAssets}>Dodaj przychody</StandardButton>
         </ButtonDiv>
         {viewToDisplay === ButtonDirections.ALL_ASSET && <AllAssets token={token}/>}
+        {viewToDisplay === ButtonDirections.ADD_ASSET && <AddAsset token={token}/>}
     </>
   )
 
