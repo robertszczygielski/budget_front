@@ -4,16 +4,13 @@ import { AssetDto } from "./AssetDto";
 import Table from 'react-bootstrap/Table'
 import styled from "styled-components";
 import { Modal } from "react-bootstrap";
+import { TokenProps } from "../common/BudgetProps";
 
 const Icon = styled.i`
     margin-right: 20px;
 `
 
-interface AllAssetsProps {
-    token: string;
-}
-
-export const AllAssets = ({token}: AllAssetsProps) => {
+export const AllAssets = ({token}: TokenProps) => {
     const [assets, setAssets] = useState<Array<AssetDto>>([]);
     const [showModal, setShowModal] = useState(false);
     const [assetToRemove, setAssetToRemove] = useState<AssetDto | undefined>(undefined)

@@ -2,6 +2,7 @@ import { AllAssets } from "./assets/AllAssets";
 import styled from "styled-components";
 import { useState } from "react";
 import { AddAsset } from "./assets/AddAsset";
+import { AllExpenses } from "./expenses/AllExpenses";
 
 const ButtonLogout = styled.button`
   background-colour: teal;
@@ -20,6 +21,7 @@ const ButtonDiv = styled.div`
 enum ButtonDirections {
     ALL_ASSET = "all_asset",
     ADD_ASSET = "add_asset",
+    ALL_EXPENSES = "all_expenses",
 }
 
 interface MainViewProps {
@@ -42,15 +44,21 @@ export const MainView = ({token, setToken}: MainViewProps) => {
       setViewToDisplay(ButtonDirections.ADD_ASSET)
     }
 
+    const setAllExpenses = () => {
+      setViewToDisplay(ButtonDirections.ALL_EXPENSES)
+    }
+
   return(
     <>
         <ButtonDiv>
             <ButtonLogout onClick={logoutUser}>Logout</ButtonLogout>
             <StandardButton onClick={setAllAssets}>Wszystkie przychody</StandardButton>
             <StandardButton onClick={setAddAssets}>Dodaj przychody</StandardButton>
+            <StandardButton onClick={setAllExpenses}>Wszystkie wydatki</StandardButton>
         </ButtonDiv>
         {viewToDisplay === ButtonDirections.ALL_ASSET && <AllAssets token={token}/>}
         {viewToDisplay === ButtonDirections.ADD_ASSET && <AddAsset token={token}/>}
+        {viewToDisplay === ButtonDirections.ALL_EXPENSES && <AllExpenses token={token}/>}
     </>
   )
 

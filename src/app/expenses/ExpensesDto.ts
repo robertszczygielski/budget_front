@@ -1,8 +1,7 @@
-export interface AssetDto {
+export interface ExpensesDto {
     id?: string;
     amount: number;
-    incomeDate: string;
+    purchaseDate: string;
     category: string;
     description: string;
-    currencyCode: string;
 }
