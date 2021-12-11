@@ -5,6 +5,7 @@ import { AssetDto } from "./AssetDto";
 import axios from "axios";
 import { FormGroup } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import { TokenProps } from "../common/BudgetProps";
 
 const Label = styled.label`
     font-size: 1em;
@@ -14,9 +15,6 @@ const Label = styled.label`
     pointer-events: none;
     will-change: transform, font-size;
 `
-interface AddAssetProps {
-    token: string;
-}
 
 enum Category {
     SALARY = "SALARY",
@@ -26,7 +24,7 @@ enum Category {
     OTHER = "OTHER",
 }
 
-export const AddAsset = ({ token }: AddAssetProps) => {
+export const AddAsset = ({ token }: TokenProps) => {
     const [currency, setCurrency] = useState<Array<string>>();
 
 const getCurrencyCodes = () => {
